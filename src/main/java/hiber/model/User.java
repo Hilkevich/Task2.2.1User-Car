@@ -95,9 +95,9 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "firstName: " + firstName + ", " +
-                "lastName: " + lastName + ", " +
-                "email: " + email + ", " +
-                car.toString();
+        return  "First Name = " + firstName + ", " +
+                "Last Name = " + lastName + ", " +
+                "Email = " + email + ", " +
+                "Car = " + getCar().getModel() + " " + getCar().getSeries();
     }
 }

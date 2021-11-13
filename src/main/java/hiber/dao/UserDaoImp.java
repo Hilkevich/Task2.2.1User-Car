@@ -1,6 +1,5 @@
 package hiber.dao;
 
-import hiber.model.Car;
 import hiber.model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Objects;
 
 
 @Repository
@@ -29,47 +27,25 @@ public class UserDaoImp implements UserDao {
         return query.getResultList();
     }
 
-
     @Override
-    public void getUserByCar(String carModel, int carSeries) {
+    public List<User> getUserByCar(String carModel, int carSeries) {
 
-        String hql = "from Car where model = :car_model and series = :car_series";
-        Query<Car> carQuery = sessionFactory.getCurrentSession().createQuery(hql);
-        carQuery.setParameter("car_model", carModel);
-        carQuery.setParameter("car_series", carSeries);
-        List<Car> listCar = carQuery.list();
+        String hql = "SELECT user FROM Car WHERE model = :car_model and series = :car_series";
+        Query userQuery = sessionFactory.getCurrentSession().createQuery(hql);
+        userQuery.setParameter("car_model", carModel);
+        userQuery.setParameter("car_series", carSeries);
+        List listUser = userQuery.list();
+        System.out.println();
 
-        if (!listCar.isEmpty()) {
-            Car finedCar = listCar.get(0);
-            User findUser = listUsers().stream()
-                    .filter(Objects::nonNull)
-                    .filter(user -> finedCar.equals(user.getCar()))
-                    .findAny()
-                    .orElse(null);
-
-            if (findUser != null) {
-                System.out.println("---------------------------------------------");
-                System.out.println("Юзер, владеющий машиной - " + findUser.getCar().getModel() + " " + findUser.getCar().getSeries() + ":");
-                System.out.println();
-                System.out.println("User Id = " + findUser.getId());
-                System.out.println("First Name = " + findUser.getFirstName());
-                System.out.println("Last Name = " + findUser.getLastName());
-                System.out.println("Email = " + findUser.getEmail());
-                System.out.println("Car = " + findUser.getCar().getModel() + " " + findUser.getCar().getSeries());
-                System.out.println("---------------------------------------------");
-            } else {
-                logIfNotExist();
+        if (listUser.size() != 0) {
+            for (int i = 0; i < listUser.size(); i++) {
+                System.out.println("Юзер владеющий машиной: " + listUser.get(i));
             }
 
         } else {
-            logIfNotExist();
+            System.out.println("Юзер владеющий машиной не найден!");
         }
-    }
-
-    private static void logIfNotExist() {
-
-        System.out.println("---------------------");
-        System.out.println("Юзер, владеющий такой машиной не найден!");
+        return listUser;
     }
 }
 

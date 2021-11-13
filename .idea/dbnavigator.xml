@@ -42,7 +42,7 @@
     <connection id="53c009c0-f6f0-4ad5-8898-029225a1aace" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="53c009c0-f6f0-4ad5-8898-029225a1aace" dataset="mydb.cars" active-filter-id="" />
+    <filter-actions connection-id="53c009c0-f6f0-4ad5-8898-029225a1aace" dataset="mydb.cars" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="53c009c0-f6f0-4ad5-8898-029225a1aace" dataset="mydb.users" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
